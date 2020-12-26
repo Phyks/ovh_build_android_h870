@@ -23,7 +23,7 @@ if __name__ == '__main__':
         # Get image id
         result = client.get(
             '/cloud/project/' + config.ovh_public_cloud_project + '/image',
-            flavorType='s1-2',
+            flavorType=config.ovh_public_cloud_flavor,
             osType='linux',
             region=config.ovh_public_cloud_region,
         )
@@ -52,7 +52,7 @@ if __name__ == '__main__':
         flavor_id = next(
             x['id']
             for x in result
-            if x['name'] == 's1-2'
+            if x['name'] == config.ovh_public_cloud_flavor
         )
 
         # Create instance

@@ -23,7 +23,7 @@ if [ "$1" == "" ] || [ $# -gt 1 ]; then
     # Run the build on the OVH instance
     scp -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" ./build_android.sh ubuntu@${IP_ADDRESS}:~
     # Build /e/ (or edit the BUILD_FLAVOR environment variable)
-    ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -f ubuntu@${IP_ADDRESS} 'screen -S build -dm bash BUILD_FLAVOR=e ./build_android.sh'
+    ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -f ubuntu@${IP_ADDRESS} 'BUILD_FLAVOR=e screen -S build -dm bash ./build_android.sh'
 else
     IP_ADDRESS="$1"
 fi
