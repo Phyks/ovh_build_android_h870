@@ -27,6 +27,9 @@ $EDITOR ovh_orchestrator/config.py  # Edit according to your own credentials / n
 
 ## Usage
 
+To spawn an OVH instance, and build on it the default flavor (`/e/`), just
+run:
+
 ```
 ./run.sh
 ```
