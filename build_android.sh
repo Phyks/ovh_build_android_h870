@@ -4,15 +4,15 @@ set -e
 set -x
 
 # Install dependencies
-apt-get update
-apt-get upgrade -y
-apt-get install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev
-apt-get install -y default-jdk
-apt-get install -y python2
-update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1  # Android git repo hooks are python2-only
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev
+sudo apt-get install -y default-jdk
+sudo apt-get install -y python2
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1  # Android git repo hooks are python2-only
 
 # Install repo
-mkdir ~/bin
+mkdir -p ~/bin
 cat >> ~/.profile <<EOF
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
@@ -36,13 +36,16 @@ source ~/.bashrc
 ccache -M 50G
 ccache -o compression=true
 
+# Prevent repo prompt about using colors
+git config --global color.ui false
+
 # Clone Lineage 17.1 or /e/ codebase (takes roughly 1h!)
 mkdir -p ~/android/lineage
 cd ~/android/lineage
 if [[ "${BUILD_FLAVOR}" == "lineage" ]]; then
-    repo init -u https://github.com/LineageOS/android.git -b lineage-17.1
+    repo init -q -u https://github.com/LineageOS/android.git -b lineage-17.1
 elif [[ "$BUILD_FLAVOR" == "e" ]]; then
-    repo init -u https://gitlab.e.foundation/e/os/android.git -b v1-q
+    repo init -q -u https://gitlab.e.foundation/e/os/android.git -b v1-q
 else
     echo "Unknown build flavor! Exiting."
     exit 1
@@ -104,8 +107,27 @@ if [[ "${BUILD_FLAVOR}" == "e" ]]; then
     rm -r prebuilts/prebuiltapks/eDrive
     # Remove ESmsSync
     rm -r prebuilts/prebuiltapks/ESmsSync
-    # Remove ESmsSync
-    rm -r prebuilts/prebuiltapks/ESmsSync
+    # Remove Notes
+    rm -r prebuilts/prebuiltapks/Notes
+    # Remove Camera
+    rm -r prebuilts/prebuiltapks/Camera
+    # Remove Browser
+    rm -r prebuilts/prebuiltapks/Browser
+    # Remove Weather
+    rm -r prebuilts/prebuiltapks/Weather
+    # Remove Tasks
+    rm -r prebuilts/prebuiltapks/Tasks
+    # Remove PdfViewer
+    rm -r prebuilts/prebuiltapks/PdfViewer
+    # Remove BrowserWebView
+    rm -r prebuilts/prebuiltapks/BrowserWebView
+    # Remove eSpeakTTS
+    rm -r prebuilts/prebuiltapks/eSpeakTTS
+    # Remove LibreOfficeViewer
+    rm -r prebuilts/prebuiltapks/LibreOfficeViewer
+    # Remove OpenWeatherMapWeatherProvider
+    rm -r prebuilts/prebuiltapks/OpenWeatherMapWeatherProvider
+    # TODO
 fi
 
 # Build Lineage or /e/ (takes 2 to 3 hours!)
