@@ -133,5 +133,4 @@ fi
 # Build Lineage or /e/ (takes 2 to 3 hours!)
 croot
 make clean
-date | tee build.log; brunch h870 | tee build.log; date | tee build.log
-touch ~/BUILD_DONE
+date | tee -a build.log && brunch h870 | tee -a build.log && date | tee -a build.log && touch ~/BUILD_DONE

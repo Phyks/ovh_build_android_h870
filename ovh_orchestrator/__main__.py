@@ -95,10 +95,11 @@ if __name__ == '__main__':
             '/cloud/project/' + config.ovh_public_cloud_project + '/instance',
             region=config.ovh_public_cloud_region,
         )
+        print(result)
         instance_id = next(
             x['id']
             for x in result
-            if sys.argv[2] in x['ipAddresses']
+            if sys.argv[2] in [x['ip'] for x in x['ipAddresses']]
         )
 
         # Delete instance

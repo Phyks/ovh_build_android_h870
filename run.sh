@@ -38,7 +38,7 @@ done
 set -e
 
 # Fetch back the built images
-rsync -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" -azr --progress ubuntu@${IP_ADDRESS}:~/android/lineage/out/target/product/h870/\*.{zip,md5sum,img} .
+#rsync -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" -azr --progress ubuntu@${IP_ADDRESS}:~/android/lineage/out/target/product/h870/\*.{zip,md5sum,img} out/
 
 # Purge the OVH instance
 ./.venv/bin/python3 -m ovh_orchestrator purge ${IP_ADDRESS}
